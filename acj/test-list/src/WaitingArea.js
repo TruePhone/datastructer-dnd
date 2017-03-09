@@ -1,7 +1,21 @@
 import React, {Component,PropTypes} from 'react';
-import update from 'react/lib/update';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContext } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
+import ItemTypes from './ItemTypes';
+
+const WaitingAreaTarget = {
+
+  drop(props, monitor, component) {
+   return {name:'WaitingArea'};
+  },
+};
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
+  };
+}
 
 const style = {
   border: '1px dashed gray',
@@ -11,10 +25,15 @@ const style = {
   height : '130px'
 };
 
-export default class WaitingArea extends Component {
+ class WaitingArea extends Component {
     render(){
-        console.log('WaitingArea');
-        return (<div style={ style }><p>WaitingArea</p>
-        {this.props.children}</div>);
+        const { connectDropTarget,position } = this.props;
+        return connectDropTarget(
+            <div style={ style }>
+                <p>WaitingArea</p>
+                {this.props.children}
+            </div>
+        );
     }
 }
+export default DropTarget(ItemTypes.DATANODE, WaitingAreaTarget, collect)(WaitingArea);

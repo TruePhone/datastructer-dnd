@@ -1,28 +1,47 @@
 import React, { Component, PropTypes } from 'react';
+import { DropTarget } from 'react-dnd';
 import DataNode from './DataNode';
+import ItemTypes from './ItemTypes';
 
-export default class BoardSquare extends Component {
+const squareTarget = {
+  drop(props, monitor, component) {
+   return {name:'BoardSquare',id:props.id};
+  },
+};
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
+  };
+}
+
+
+class BoardSquare extends Component {
 //   static propTypes = {
 //     x: PropTypes.number.isRequired,
 //     y: PropTypes.number.isRequired
 //   };
 
   render() {
-    const { position } = this.props;
+    const { connectDropTarget,position } = this.props;
+
     let style = {
         border: '1px dashed gray',
         backgroundColor: 'blue',
-        height: '50px',
-        width: '50px',
+        height: '100%',
+        width: '100%',
         float:'left',
     };
 
-    return (
+    return connectDropTarget(
         
       <div style={style}>
-        <p> Square </p>
+        <p> {this.props.id} </p>
         {this.props.children}
       </div>
     );
   }
 }
+export default DropTarget(ItemTypes.DATANODE, squareTarget, collect)(BoardSquare);
