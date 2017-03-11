@@ -1,6 +1,6 @@
 export default class ArrayList {
     constructor (){
-        this.arr = new  Array();
+        this.arr = [];
         this.length = 0;
     }
 
@@ -23,11 +23,11 @@ export default class ArrayList {
     clear() {
         this.arr = null;
         this.length = 0;
-        this.arr = new Array();
+        this.arr = [];
     }
 
     remove (position) {
-        if ((position < 0) || (position > this.length) || (position == this.length)) {
+        if ((position < 0) || (position > this.length) || (position === this.length)) {
             console.log("位置超出范围");
             return;
         }
@@ -39,7 +39,7 @@ export default class ArrayList {
     }
 
     update (position, elem) {
-        if ((position < 0) || (position > this.length) || (position == this.length)) {
+        if ((position < 0) || (position > this.length) || (position === this.length)) {
             console.log("位置超出范围");
             return;
         }
@@ -47,7 +47,7 @@ export default class ArrayList {
     }
 
     get(position) {
-        if ((position < 0) || (position > this.length) || (position == this.length)) {
+        if ((position < 0) || (position > this.length) || (position === this.length)) {
             console.log("位置超出范围");
             return;
         }
@@ -56,21 +56,21 @@ export default class ArrayList {
 
     contains (elem) {
         for (var i = 0; i < this.length; i++)
-            if (this.arr[i] == elem)
+            if (this.arr[i] === elem)
                 return true;
         return false;
     }
 
     indexOf (elem) {
         for (var i = 0; i < this.length; i++)
-            if (this.arr[i] == elem)
+            if (this.arr[i] === elem)
                 return i;
         return -1;
     }
 
     lastIndexOf (elem) {
         for (var i = this.length; i > -1; i--)
-            if (this.arr[i] == elem)
+            if (this.arr[i] === elem)
                 return i;
         return -1;
     }

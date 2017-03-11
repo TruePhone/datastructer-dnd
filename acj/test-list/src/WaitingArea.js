@@ -1,12 +1,20 @@
-import React, {Component,PropTypes} from 'react';
+import React, {Component} from 'react';
 import { DropTarget } from 'react-dnd';
 import ItemTypes from './ItemTypes';
-
+import DataNode from './DataNode';
+import BoardSquare from './BoardSquare';
 const WaitingAreaTarget = {
-
-  drop(props, monitor, component) {
-   return {name:'WaitingArea'};
-  },
+    canDrop(props, monitor) {
+      if(monitor.getItem().position==="WaitingArea"){
+        return false;
+      }else{
+        return true;
+      }
+        
+    },
+    drop(props, monitor, component) {
+      return {name:'WaitingArea'};
+    },
 };
 
 function collect(connect, monitor) {
@@ -22,17 +30,59 @@ const style = {
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
   backgroundColor: 'white',
-  height : '130px'
+  height : '130px',
+  width:'100%',
+  display: 'flex',
+  flexDirection: 'row', 
+  flexWrap: 'wrap',
+  position: 'relative',
 };
 
  class WaitingArea extends Component {
+
+    
+    renderSquare(i){
+      return (           
+          <BoardSquare key={i} position='WaitingArea'>
+                <DataNode id={i} position='WaitingArea'/>
+          </BoardSquare>
+      );
+    }
+
+    renderOverlay(color) {
+      return (
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            width: '100%',
+            zIndex: 1,
+            opacity: 0.5,
+            backgroundColor: color,
+          }}
+        />
+      );
+    }
+
     render(){
-        const { connectDropTarget,position } = this.props;
+        const { connectDropTarget,canDrop,isOver } = this.props;
+
+        const squares = [];
+        for (let i = 0; i <= 8; i += 1) {
+            squares.push(this.renderSquare(i));
+        }  
+   
+
         return connectDropTarget(
             <div style={ style }>
-                <p>WaitingArea</p>
-                {this.props.children}
+                <h5 style={{width:'100%'}}>WaitingArea</h5>
+                {squares}
+            {!isOver && canDrop && this.renderOverlay('yellow')}
+            {isOver && canDrop && this.renderOverlay('green')}
             </div>
+            
         );
     }
 }

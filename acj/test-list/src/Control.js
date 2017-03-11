@@ -1,21 +1,25 @@
 import ArrayList from './ArrayList'
-import WaitingData from './WaitingData'
+// import WaitingData from './WaitingData'
 
 let observer = null;
 
-let arrayList = new ArrayList;
+let arrayList = new ArrayList();
 arrayList.append(1);
 arrayList.append(2);
-console.log(arrayList.getLength());
 
 export function getDataStructer(toX, toY) {
     return arrayList;
 }
 
-export function getWaitingData(toX, toY) {
-    return WaitingData;
+// export function getWaitingData(toX, toY) {
+//     return WaitingData;
+// }
+console.log('clientWidth');
+console.log(document.body.clientWidth);
+let dataNodeWidth = 60;
+export function getMaxNum(){
+  return Math.floor(document.body.clientWidth /dataNodeWidth) -1;
 }
-
 
 function emitChange() {
   //console.log('emitChange');
@@ -29,7 +33,6 @@ export function observe(o) {
   }
 
   observer = o;
-  emitChange();
 
   return () => {
     observer = null;
