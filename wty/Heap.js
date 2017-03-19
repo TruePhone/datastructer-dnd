@@ -112,9 +112,8 @@ export default class Heap {
             this.swap(position, this.parent(position));
             position = this.parent(position);
         }
-        if (this.length){
+        if (this.length)
             this.siftdown(position);
-        }         
         return Heap[this.length];
     }
 
@@ -139,18 +138,15 @@ export default class Heap {
         this.print();
     }
     print() {
+        if (!this.length) {
+            console.log("[]");
+            return;
+        }
         var result = "[";
         for (var i = 0; i < this.length - 1; i++)
             result += this.heap[i] + ",";
         result += this.heap[this.length - 1] + "]";
         console.log(result);
     }
-    //-------------------
-    get(i){
-        return this.heap[i];
-    }
-    remove(position) {
-        this.delete(position);
-    }    
 }
 

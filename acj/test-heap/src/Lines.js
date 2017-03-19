@@ -7,7 +7,7 @@ const style = {
   backgroundColor: 'white',
   padding: 0,
   top: -30,
- 
+  userSelect:'none',
 
 };
 

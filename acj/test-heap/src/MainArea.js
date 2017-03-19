@@ -4,7 +4,7 @@ import {getDataStructer,getMaxNum} from './Control';
 import { DropTarget } from 'react-dnd';
 import DataNode from './DataNode';
 import ItemTypes from './ItemTypes';
-import Lines from './Lines'
+
 
 const areaTarget = {
     canDrop(props, monitor) {
